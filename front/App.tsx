@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native";
 import * as Fonts from "expo-font";
 import { commonStyles } from "./styles";
-import MainPage from "./pages/registration";
+import MainPage from "./pages";
 import { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 

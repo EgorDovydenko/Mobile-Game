@@ -1,13 +1,8 @@
 import { StyleSheet } from "react-native";
 
-export const firstRegScreenStyles = StyleSheet.create({
-  p: {
-    textAlign: "center",
-    marginTop: "10%",
-  },
+export const baseButtonStyles = StyleSheet.create({
   emailBtn: {
     width: "80%",
-    marginTop: 20,
   },
   emailRegText: {
     color: "#fae6b4",

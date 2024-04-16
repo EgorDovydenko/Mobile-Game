@@ -1,20 +1,29 @@
 import { Animated, ImageBackground, Pressable, Text, View } from "react-native";
 import { commonStyles } from "../../styles";
-import { registartionStyles } from "../../pages/registration/styles";
+import { registartionStyles } from "../styles";
 
 import AxeSvg from "../../assets/mainScreen/weapons/axe.svg";
 import KnifeSvg from "../../assets/mainScreen/weapons/knife.svg";
 import BowSvg from "../../assets/mainScreen/weapons/bow.svg";
 import MagicSvg from "../../assets/mainScreen/weapons/magic2.svg";
 import { useState } from "react";
+import { createCharacterStyles } from "./styles";
+import useSWR from "swr";
+import HTTPService from "../../utils/HTTPService";
+import { UserModel } from "../../types/user";
 
-export const ThirdRegistrationScreen = () => {
+export const CreateCharacterScreen = () => {
   const scaleValueAxe = new Animated.Value(1);
   const scaleValueKnife = new Animated.Value(1);
   const scaleValueBow = new Animated.Value(1);
   const scaleValueMagic = new Animated.Value(1);
 
-  const name = localStorage.getItem("email");
+  const { data } = useSWR(
+    { url: `user/info` },
+    HTTPService.getFetcher<UserModel>
+  );
+
+  const name = data?.name;
 
   const [weapon, setWeapon] = useState("");
 
@@ -35,25 +44,32 @@ export const ThirdRegistrationScreen = () => {
   };
 
   return (
-    <>
-      <Text style={[commonStyles.p]}>
+    <View style={commonStyles.content}>
+      <Text style={[commonStyles.p, createCharacterStyles.title]}>
         Приветствую, {name}! {"\n"}Как ты предпочитаешь сражаться?
       </Text>
-      <View style={registartionStyles.weaponsContainer}>
-        <View style={registartionStyles.weaponsRow}>
+      <View style={createCharacterStyles.weaponsContainer}>
+        <View style={createCharacterStyles.weaponsRow}>
           <Pressable
             onPress={() => setWeapon("axe")}
             onPressIn={() => handlePressIn(scaleValueAxe)}
             onPressOut={() => handlePressOut(scaleValueAxe)}
-            style={registartionStyles.pressableScroll}
+            style={createCharacterStyles.pressableScroll}
           >
             <Animated.View style={{ transform: [{ scale: scaleValueAxe }] }}>
               <ImageBackground
                 source={require("../../assets/mainScreen/weapons/list1.png")}
-                style={registartionStyles.singleScrollBg}
+                style={createCharacterStyles.singleScrollBg}
               >
-                <AxeSvg width={100} height={100} />
-                <Text style={commonStyles.p}>Ближний бой</Text>
+                <AxeSvg width={70} height={70} />
+                <Text
+                  style={[
+                    commonStyles.p,
+                    createCharacterStyles.weaponDescription,
+                  ]}
+                >
+                  Ближний бой
+                </Text>
               </ImageBackground>
             </Animated.View>
           </Pressable>
@@ -61,33 +77,47 @@ export const ThirdRegistrationScreen = () => {
             onPress={() => setWeapon("knife")}
             onPressIn={() => handlePressIn(scaleValueKnife)}
             onPressOut={() => handlePressOut(scaleValueKnife)}
-            style={registartionStyles.pressableScroll}
+            style={createCharacterStyles.pressableScroll}
           >
             <Animated.View style={{ transform: [{ scale: scaleValueKnife }] }}>
               <ImageBackground
                 source={require("../../assets/mainScreen/weapons/list2.png")}
-                style={registartionStyles.singleScrollBg}
+                style={createCharacterStyles.singleScrollBg}
               >
-                <KnifeSvg width={100} height={100} />
-                <Text style={commonStyles.p}>Скрытность</Text>
+                <KnifeSvg width={70} height={70} />
+                <Text
+                  style={[
+                    commonStyles.p,
+                    createCharacterStyles.weaponDescription,
+                  ]}
+                >
+                  Скрытность
+                </Text>
               </ImageBackground>
             </Animated.View>
           </Pressable>
         </View>
-        <View style={registartionStyles.weaponsRow}>
+        <View style={createCharacterStyles.weaponsRow}>
           <Pressable
             onPress={() => setWeapon("bow")}
             onPressIn={() => handlePressIn(scaleValueBow)}
             onPressOut={() => handlePressOut(scaleValueBow)}
-            style={registartionStyles.pressableScroll}
+            style={createCharacterStyles.pressableScroll}
           >
             <Animated.View style={{ transform: [{ scale: scaleValueBow }] }}>
               <ImageBackground
                 source={require("../../assets/mainScreen/weapons/list3.png")}
-                style={registartionStyles.singleScrollBg}
+                style={createCharacterStyles.singleScrollBg}
               >
-                <BowSvg width={100} height={100} />
-                <Text style={commonStyles.p}>Дальний бой</Text>
+                <BowSvg width={70} height={70} />
+                <Text
+                  style={[
+                    commonStyles.p,
+                    createCharacterStyles.weaponDescription,
+                  ]}
+                >
+                  Дальний бой
+                </Text>
               </ImageBackground>
             </Animated.View>
           </Pressable>
@@ -95,20 +125,27 @@ export const ThirdRegistrationScreen = () => {
             onPress={() => setWeapon("magic")}
             onPressIn={() => handlePressIn(scaleValueMagic)}
             onPressOut={() => handlePressOut(scaleValueMagic)}
-            style={registartionStyles.pressableScroll}
+            style={createCharacterStyles.pressableScroll}
           >
             <Animated.View style={{ transform: [{ scale: scaleValueMagic }] }}>
               <ImageBackground
                 source={require("../../assets/mainScreen/weapons/list4.png")}
-                style={registartionStyles.singleScrollBg}
+                style={createCharacterStyles.singleScrollBg}
               >
-                <MagicSvg width={100} height={100} />
-                <Text style={commonStyles.p}>Магия</Text>
+                <MagicSvg width={70} height={70} />
+                <Text
+                  style={[
+                    commonStyles.p,
+                    createCharacterStyles.weaponDescription,
+                  ]}
+                >
+                  Магия
+                </Text>
               </ImageBackground>
             </Animated.View>
           </Pressable>
         </View>
       </View>
-    </>
+    </View>
   );
 };

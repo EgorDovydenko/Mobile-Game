@@ -31,29 +31,4 @@ export const registartionStyles = StyleSheet.create({
     paddingRight: 10,
     marginTop: "auto",
   },
-  // second screen
-  weaponsContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    gap: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  weaponsRow: {
-    flexDirection: "row",
-    gap: 20,
-  },
-  pressableScroll: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    aspectRatio: 1 / 1,
-  },
-  singleScrollBg: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
 });

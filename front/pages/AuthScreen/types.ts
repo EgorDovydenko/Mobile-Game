@@ -1,4 +1,4 @@
-import { WithSetStep } from "../../../pages/registration/types";
+import { WithSetStep } from "../types";
 
 export interface FirstRegScreenType extends WithSetStep {
   goEmailRegistration: () => void;
