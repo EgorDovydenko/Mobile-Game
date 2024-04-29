@@ -1,3 +1,3 @@
-export interface WithSetStep {
-  setStep: (step: number) => void;
+export interface WithGetUser {
+  getUser: () => void;
 }

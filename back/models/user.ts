@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { WeaponsEnum } from "./constants";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -21,6 +22,7 @@ const UserSchema = new mongoose.Schema(
     },
     weapon: {
       type: String,
+      enum: Object.values(WeaponsEnum),
     },
   },
   {

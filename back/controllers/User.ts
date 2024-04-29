@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import User from "../models/user";
+import { WeaponsEnum } from "../models/constants";
+import { UserType } from "../models/types";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -83,8 +85,11 @@ export const getUserInfo = async (req: any, res: Response) => {
   }
 };
 
-export const setUserWeapon = async (req: any, res: Response) => {
-  const token = req.headers.authorization.split(" ")[1];
+export const setUserWeapon = async (
+  req: Request<{}, UserType, { weapon: WeaponsEnum }>,
+  res: Response
+) => {
+  const token = req.headers?.authorization?.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -92,7 +97,7 @@ export const setUserWeapon = async (req: any, res: Response) => {
 
   try {
     const { weapon } = req.body;
-    const user: any = jwt.verify(token, "112233");
+    const user = jwt.verify(token, "112233") as UserType;
 
     const updatedUser = await User.findByIdAndUpdate(
       user.id,
@@ -105,7 +110,6 @@ export const setUserWeapon = async (req: any, res: Response) => {
     }
 
     const { _id, ...userData } = updatedUser.toJSON();
-
     res.json({ id: _id, ...userData });
   } catch (error) {
     console.log(error);

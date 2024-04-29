@@ -12,10 +12,13 @@ import { Text } from "react-native-svg";
 export default function MainPage() {
   const [step, setStep] = useState<number | null>(null);
 
-  const { data, isLoading } = useSWR(
-    { url: `user/info` },
-    HTTPService.getFetcher<UserModel>
-  );
+  const {
+    data,
+    isLoading,
+    mutate: getUser,
+  } = useSWR({ url: `user/info` }, HTTPService.getFetcher<UserModel>, {
+    errorRetryCount: 0,
+  });
 
   useEffect(() => {
     !isLoading && setStep(data ? data.step : 0);
@@ -72,9 +75,9 @@ export default function MainPage() {
           <></>
         ) : (
           <>
-            {step === 0 && <AuthScreen setStep={setStep} />}
+            {step === 0 && <AuthScreen getUser={getUser} />}
             {step === 1 && data && (
-              <ChooseWeaponScreen userName={data.name} setStep={setStep} />
+              <ChooseWeaponScreen userName={data.name} getUser={getUser} />
             )}
             {step === 2 && <Text>Coming soon</Text>}
           </>

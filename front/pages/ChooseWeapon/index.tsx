@@ -10,15 +10,16 @@ import { createCharacterStyles } from "./styles";
 import useSWRMutation from "swr/mutation";
 import HTTPService from "../../utils/HTTPService";
 import { UserModel } from "../../types/user";
-import { WithSetStep } from "../types";
+import { WithGetUser } from "../types";
+import { WeaponsEnum } from "../../constants";
 
-interface CreateCharacterScreenProps extends WithSetStep {
+interface CreateCharacterScreenProps extends WithGetUser {
   userName: string;
 }
 
 export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
   userName,
-  setStep,
+  getUser,
 }) => {
   const scaleValueAxe = new Animated.Value(1);
   const scaleValueKnife = new Animated.Value(1);
@@ -27,7 +28,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
 
   const [weapon, setWeapon] = useState("");
 
-  const { data: setWeaponData, trigger: handleSetWeapon } = useSWRMutation(
+  const { trigger: handleSetWeapon } = useSWRMutation(
     { url: `user/weapon`, body: { weapon } },
     HTTPService.postFetcher<UserModel>
   );
@@ -49,24 +50,20 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
   };
 
   useEffect(() => {
-    weapon && handleSetWeapon();
+    weapon && handleSetWeapon().then(() => getUser());
   }, [weapon]);
-
-  useEffect(() => {
-    setWeaponData && setStep(setWeaponData.step);
-  }, [setWeaponData]);
-
-  console.log(setWeaponData);
 
   return (
     <View style={commonStyles.content}>
       <Text style={[commonStyles.p, createCharacterStyles.title]}>
         Приветствую, {userName}! {"\n"}Как ты предпочитаешь сражаться?
+        {"\n"}
+        {"\n"} Но знай, что от выбора твоего оружия, зависит многое...
       </Text>
       <View style={createCharacterStyles.weaponsContainer}>
         <View style={createCharacterStyles.weaponsRow}>
           <Pressable
-            onPress={() => setWeapon("axe")}
+            onPress={() => setWeapon(WeaponsEnum.Axe)}
             onPressIn={() => handlePressIn(scaleValueAxe)}
             onPressOut={() => handlePressOut(scaleValueAxe)}
             style={createCharacterStyles.pressableScroll}
@@ -89,7 +86,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
             </Animated.View>
           </Pressable>
           <Pressable
-            onPress={() => setWeapon("knife")}
+            onPress={() => setWeapon(WeaponsEnum.Knife)}
             onPressIn={() => handlePressIn(scaleValueKnife)}
             onPressOut={() => handlePressOut(scaleValueKnife)}
             style={createCharacterStyles.pressableScroll}
@@ -114,7 +111,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
         </View>
         <View style={createCharacterStyles.weaponsRow}>
           <Pressable
-            onPress={() => setWeapon("bow")}
+            onPress={() => setWeapon(WeaponsEnum.Bow)}
             onPressIn={() => handlePressIn(scaleValueBow)}
             onPressOut={() => handlePressOut(scaleValueBow)}
             style={createCharacterStyles.pressableScroll}
@@ -137,7 +134,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
             </Animated.View>
           </Pressable>
           <Pressable
-            onPress={() => setWeapon("magic")}
+            onPress={() => setWeapon(WeaponsEnum.Magic)}
             onPressIn={() => handlePressIn(scaleValueMagic)}
             onPressOut={() => handlePressOut(scaleValueMagic)}
             style={createCharacterStyles.pressableScroll}

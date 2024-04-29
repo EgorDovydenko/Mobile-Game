@@ -6,13 +6,13 @@ import { emailRegStyles } from "./styles";
 import * as SecureStore from "expo-secure-store";
 
 import useSWRMutation from "swr/mutation";
-import { UserEnterFormProps, VaidationErrorModel } from "./types";
+import { UserEnterFormProps, ValidationErrorModel } from "./types";
 import { useKeyboardCheck } from "../../../hooks/useKeyboardCheck";
 import { UserModel } from "../../../types/user";
 import HTTPService from "../../../utils/HTTPService";
 import { commonStyles } from "../../../styles";
 
-export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, setStep }) => {
+export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -43,11 +43,11 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, setStep }) => {
     isLogin ? handleLogin() : handleRegister();
   };
 
-  const validationErrors = error as VaidationErrorModel | undefined;
+  const validationErrors = error as ValidationErrorModel | undefined;
 
   const saveUserTokenToStorage = async (token: string) => {
     await SecureStore.setItemAsync("auth_token", token);
-    setStep(1);
+    getUser();
   };
 
   useEffect(() => {
