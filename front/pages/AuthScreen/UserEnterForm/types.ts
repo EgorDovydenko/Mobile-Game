@@ -1,4 +1,5 @@
 import { CommonErrorModel } from "../../../types/user";
+import { WithSetStep } from "../../types";
 
 export interface VaidationErrorModel extends CommonErrorModel {
   email?: string;
@@ -6,6 +7,6 @@ export interface VaidationErrorModel extends CommonErrorModel {
   name?: string;
 }
 
-export interface UserEnterFormProps {
+export interface UserEnterFormProps extends WithSetStep {
   isLogin: boolean;
 }

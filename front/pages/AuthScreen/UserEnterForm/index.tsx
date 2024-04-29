@@ -12,7 +12,7 @@ import { UserModel } from "../../../types/user";
 import HTTPService from "../../../utils/HTTPService";
 import { commonStyles } from "../../../styles";
 
-export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin }) => {
+export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, setStep }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -39,8 +39,6 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin }) => {
   const error = isLogin ? loginError : registerError;
   const data = isLogin ? loginData : registerData;
 
-  console.log(data);
-
   const handleBtnClick = () => {
     isLogin ? handleLogin() : handleRegister();
   };
@@ -49,6 +47,7 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin }) => {
 
   const saveUserTokenToStorage = async (token: string) => {
     await SecureStore.setItemAsync("auth_token", token);
+    setStep(1);
   };
 
   useEffect(() => {

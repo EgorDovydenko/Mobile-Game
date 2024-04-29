@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { ImageBackground, Animated } from "react-native";
-import { registartionStyles } from "./styles";
+import { registrationStyles } from "./styles";
 
 import { AuthScreen } from "./AuthScreen";
-import { CreateCharacterScreen } from "./CreateCharacterScreen";
+import { ChooseWeaponScreen } from "./ChooseWeapon";
 import HTTPService from "../utils/HTTPService";
 import { UserModel } from "../types/user";
 import useSWR from "swr";
 import { Text } from "react-native-svg";
 
 export default function MainPage() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<number | null>(null);
 
   const { data, isLoading } = useSWR(
     { url: `user/info` },
@@ -18,8 +18,8 @@ export default function MainPage() {
   );
 
   useEffect(() => {
-    setStep(data ? data.step : 0);
-  }, [data]);
+    !isLoading && setStep(data ? data.step : 0);
+  }, [data, isLoading]);
 
   // setInterval(async () => {
   //   console.log(await SecureStore.getItemAsync("auth_token"), "token");
@@ -51,7 +51,7 @@ export default function MainPage() {
   return (
     <Animated.View
       style={[
-        registartionStyles.container,
+        registrationStyles.container,
         // {
         //   transform: [
         //     {
@@ -66,14 +66,17 @@ export default function MainPage() {
     >
       <ImageBackground
         source={require("../assets/mainScreen/paper.png")}
-        style={registartionStyles.mainBgBlock}
+        style={registrationStyles.mainBgBlock}
       >
         {isLoading ? (
           <></>
         ) : (
           <>
             {step === 0 && <AuthScreen setStep={setStep} />}
-            {step === 1 && <CreateCharacterScreen />}
+            {step === 1 && data && (
+              <ChooseWeaponScreen userName={data.name} setStep={setStep} />
+            )}
+            {step === 2 && <Text>Coming soon</Text>}
           </>
         )}
       </ImageBackground>

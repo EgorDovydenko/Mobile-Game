@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const registartionStyles = StyleSheet.create({
+export const registrationStyles = StyleSheet.create({
   // common
   container: {
     flex: 1,

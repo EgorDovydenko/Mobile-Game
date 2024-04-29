@@ -6,6 +6,7 @@ export interface UserModel {
   name: string;
   token: string;
   step: number;
+  weapon: string;
 }
 
 export interface CommonErrorModel {

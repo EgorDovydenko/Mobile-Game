@@ -1,31 +1,36 @@
 import { Animated, ImageBackground, Pressable, Text, View } from "react-native";
 import { commonStyles } from "../../styles";
-import { registartionStyles } from "../styles";
 
 import AxeSvg from "../../assets/mainScreen/weapons/axe.svg";
 import KnifeSvg from "../../assets/mainScreen/weapons/knife.svg";
 import BowSvg from "../../assets/mainScreen/weapons/bow.svg";
 import MagicSvg from "../../assets/mainScreen/weapons/magic2.svg";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { createCharacterStyles } from "./styles";
-import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import HTTPService from "../../utils/HTTPService";
 import { UserModel } from "../../types/user";
+import { WithSetStep } from "../types";
 
-export const CreateCharacterScreen = () => {
+interface CreateCharacterScreenProps extends WithSetStep {
+  userName: string;
+}
+
+export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
+  userName,
+  setStep,
+}) => {
   const scaleValueAxe = new Animated.Value(1);
   const scaleValueKnife = new Animated.Value(1);
   const scaleValueBow = new Animated.Value(1);
   const scaleValueMagic = new Animated.Value(1);
 
-  const { data } = useSWR(
-    { url: `user/info` },
-    HTTPService.getFetcher<UserModel>
-  );
-
-  const name = data?.name;
-
   const [weapon, setWeapon] = useState("");
+
+  const { data: setWeaponData, trigger: handleSetWeapon } = useSWRMutation(
+    { url: `user/weapon`, body: { weapon } },
+    HTTPService.postFetcher<UserModel>
+  );
 
   const handlePressIn = (scaleValue: Animated.Value) => {
     Animated.spring(scaleValue, {
@@ -43,10 +48,20 @@ export const CreateCharacterScreen = () => {
     }).start();
   };
 
+  useEffect(() => {
+    weapon && handleSetWeapon();
+  }, [weapon]);
+
+  useEffect(() => {
+    setWeaponData && setStep(setWeaponData.step);
+  }, [setWeaponData]);
+
+  console.log(setWeaponData);
+
   return (
     <View style={commonStyles.content}>
       <Text style={[commonStyles.p, createCharacterStyles.title]}>
-        Приветствую, {name}! {"\n"}Как ты предпочитаешь сражаться?
+        Приветствую, {userName}! {"\n"}Как ты предпочитаешь сражаться?
       </Text>
       <View style={createCharacterStyles.weaponsContainer}>
         <View style={createCharacterStyles.weaponsRow}>

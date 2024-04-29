@@ -33,6 +33,6 @@ export const AuthScreen: FC<WithSetStep> = ({ setStep }) => {
       />
     </View>
   ) : (
-    <UserEnterForm isLogin={isLogin} />
+    <UserEnterForm isLogin={isLogin} setStep={setStep} />
   );
 };

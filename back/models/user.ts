@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema(
       required: true,
       default: 1,
     },
+    weapon: {
+      type: String,
+    },
   },
   {
     timestamps: true,

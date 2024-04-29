@@ -2,7 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import { getUserInfo, login, register } from "./controllers/User";
+import {
+  getUserInfo,
+  login,
+  register,
+  setUserWeapon,
+} from "./controllers/User";
 import { loginValidation, registerValidation } from "./validation";
 import { handleValidationErrors } from "./utils/handleValidationErrors";
 import { checkAuth } from "./utils/checkAuth";
@@ -28,7 +33,9 @@ app.post(
   register
 );
 app.post("/auth/login", loginValidation, handleValidationErrors, login);
+
 app.get("/user/info", checkAuth, getUserInfo);
+app.post("/user/weapon", checkAuth, setUserWeapon);
 
 app.listen(1000, () => {
   console.log("Server is running on port 1000");

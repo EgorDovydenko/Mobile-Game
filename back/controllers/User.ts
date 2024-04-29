@@ -1,3 +1,4 @@
+import { UserModel } from "./../../front/types/user/index";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -33,7 +34,6 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  console.log("JEJEJ", req);
   try {
     const { email, password } = req.body;
 
@@ -79,6 +79,36 @@ export const getUserInfo = async (req: any, res: Response) => {
 
     res.json({ id: _id, ...userData });
   } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const setUserWeapon = async (req: any, res: Response) => {
+  const token = req.headers.authorization.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const { weapon } = req.body;
+    const user: any = jwt.verify(token, "112233");
+
+    const updatedUser = await User.findByIdAndUpdate(
+      user.id,
+      { weapon, step: 2 },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { _id, ...userData } = updatedUser.toJSON();
+
+    res.json({ id: _id, ...userData });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
