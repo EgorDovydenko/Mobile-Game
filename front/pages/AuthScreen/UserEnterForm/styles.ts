@@ -17,11 +17,8 @@ export const emailRegStyles = StyleSheet.create({
     width: "100%",
     marginTop: 30,
   },
-  startAdvtext: {
-    color: "#552600",
-    fontSize: 32,
-    lineHeight: 30,
-    height: 50,
+  startAdvText: {
+    marginTop: 20,
   },
   errorMessage: {
     color: "red",

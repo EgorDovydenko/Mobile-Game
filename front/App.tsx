@@ -14,8 +14,7 @@ export default function App() {
     async function prepare() {
       try {
         await Fonts.loadAsync({
-          Cuprum: require("./assets/fonts/Cuprum.ttf"),
-          Beaumarchais: require("./assets/fonts/Beaumarchais.ttf"),
+          TriodPostnaja: require("./assets/fonts/TriodPostnaja.ttf"),
         });
       } catch (e) {
         console.warn(e);

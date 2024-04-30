@@ -58,7 +58,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
       <Text style={[commonStyles.p, createCharacterStyles.title]}>
         Приветствую, {userName}! {"\n"}Как ты предпочитаешь сражаться?
         {"\n"}
-        {"\n"} Но знай, что от выбора твоего оружия, зависит многое...
+        {"\n"} Знай, что от выбора оружия зависит многое...
       </Text>
       <View style={createCharacterStyles.weaponsContainer}>
         <View style={createCharacterStyles.weaponsRow}>

@@ -11,6 +11,7 @@ import { useKeyboardCheck } from "../../../hooks/useKeyboardCheck";
 import { UserModel } from "../../../types/user";
 import HTTPService from "../../../utils/HTTPService";
 import { commonStyles } from "../../../styles";
+import { BaseButton } from "../../../components/Buttons/BaseButton/BaseButton";
 
 export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
   const [email, setEmail] = useState("");
@@ -58,8 +59,8 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
     <View style={commonStyles.content}>
       {isKeyboardOpen ? null : (
         <Text style={[commonStyles.p, emailRegStyles.p]}>
-          Для входа в игру введите свой емайл, придумайте пароль и имя игрового
-          персонажa
+          Для входа в игровой мир введите свой email, придумайте пароль и имя
+          игрового персонажa
         </Text>
       )}
       <TextInput
@@ -115,15 +116,11 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
       {error?.message && (
         <Text style={emailRegStyles.errorMessage}>{error.message}</Text>
       )}
-      <TouchableOpacity
-        disabled={!email || !password}
-        onPress={handleBtnClick}
-        style={emailRegStyles.btn}
-      >
-        <Text style={[commonStyles.button, emailRegStyles.startAdvtext]}>
-          {isLogin ? "~Войти~" : "~Зарегистрироваться~"}
-        </Text>
-      </TouchableOpacity>
+      <BaseButton
+        style={emailRegStyles.startAdvText}
+        onClick={handleBtnClick}
+        text={isLogin ? "Войти" : "Зарегистрироваться"}
+      />
     </View>
   );
 };

@@ -31,6 +31,6 @@ export const createCharacterStyles = StyleSheet.create({
   },
   weaponDescription: {
     textAlign: "center",
-    fontSize: 19,
+    fontSize: 17,
   },
 });
