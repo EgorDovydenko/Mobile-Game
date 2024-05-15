@@ -8,9 +8,10 @@ import { UserModel } from "../types/user";
 import useSWR from "swr";
 import { useAtom } from "jotai";
 import { stepAtom, userAtom } from "../store";
-import { Step_1 } from "./Step_1";
+import { Step_2 } from "./Step_2";
 import { commonStyles } from "../styles";
 import { useFadeAnim } from "../hooks/useFadeAnim";
+import { Step_3 } from "./Step_3";
 
 export default function MainPage() {
   const [user, setUser] = useAtom(userAtom);
@@ -35,24 +36,27 @@ export default function MainPage() {
   }, [data, isLoading]);
 
   return step !== null ? (
-    <Animated.View
-      style={[
-        commonStyles.container,
-        {
-          opacity: fadeAnim,
-        },
-      ]}
-    >
+    <>
       {step < 2 && (
-        <ImageBackground
-          source={require("../assets/mainScreen/paper.png")}
-          style={commonStyles.content}
+        <Animated.View
+          style={[
+            commonStyles.container,
+            {
+              opacity: fadeAnim,
+            },
+          ]}
         >
-          {step === 0 && <AuthScreen />}
-          {step === 1 && user && <ChooseWeaponScreen userName={user.name} />}
-        </ImageBackground>
+          <ImageBackground
+            source={require("../assets/mainScreen/paper.png")}
+            style={commonStyles.content}
+          >
+            {step === 0 && <AuthScreen />}
+            {step === 1 && user && <ChooseWeaponScreen userName={user.name} />}
+          </ImageBackground>
+        </Animated.View>
       )}
-      {step === 2 && <Step_1 />}
-    </Animated.View>
+      {step === 2 && <Step_2 />}
+      {step === 3 && <Step_3 />}
+    </>
   ) : null;
 }

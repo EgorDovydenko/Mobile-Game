@@ -1,4 +1,4 @@
-import { TextInput, TouchableOpacity, View, Text } from "react-native";
+import { TextInput, View, Text } from "react-native";
 
 import { FC, useEffect, useState } from "react";
 import { emailRegStyles } from "./styles";
