@@ -17,7 +17,11 @@ export const AuthScreen: FC = () => {
         Погрузись в увлекательное путешествие и стань героем своей собственной
         истории.
       </Text>
-      <BaseButton onClick={() => setIsUserEnterForm(true)} text="Регистрация" />
+      <BaseButton
+        style={authScreenStyles.btn}
+        onClick={() => setIsUserEnterForm(true)}
+        text="Регистрация"
+      />
       <BaseButton
         style={authScreenStyles.btn}
         onClick={() => {

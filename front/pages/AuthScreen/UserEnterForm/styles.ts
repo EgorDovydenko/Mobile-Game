@@ -7,18 +7,18 @@ export const emailRegStyles = StyleSheet.create({
     textAlign: "center",
   },
   input: {
-    width: "80%",
+    width: 300,
     marginTop: 10,
   },
   inputError: {
     borderColor: "red",
   },
   btn: {
-    width: "100%",
     marginTop: 30,
   },
   startAdvText: {
     marginTop: 20,
+    minWidth: 200,
   },
   errorMessage: {
     color: "red",

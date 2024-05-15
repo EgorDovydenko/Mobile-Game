@@ -8,5 +8,6 @@ export const authScreenStyles = StyleSheet.create({
   },
   btn: {
     marginTop: 10,
+    width: 200,
   },
 });

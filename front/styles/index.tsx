@@ -7,10 +7,11 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: "#000",
   },
   content: {
-    padding: 20,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    minWidth: "100%",
+    minHeight: "100%",
   },
   p: {
     fontSize: 26,
@@ -23,6 +24,7 @@ export const commonStyles = StyleSheet.create({
   button: {
     height: 50,
     borderRadius: 10,
+    padding: 10,
     justifyContent: "center",
     textAlign: "center",
     alignItems: "center",
