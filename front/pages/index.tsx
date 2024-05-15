@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ImageBackground, Animated } from "react-native";
 import { registrationStyles } from "./styles";
 
@@ -8,22 +8,28 @@ import HTTPService from "../utils/HTTPService";
 import { UserModel } from "../types/user";
 import useSWR from "swr";
 import { Text } from "react-native-svg";
+import { useAtom } from "jotai";
+import { stepAtom, userAtom } from "../store";
 
 export default function MainPage() {
-  const [step, setStep] = useState<number | null>(null);
+  const [user, setUser] = useAtom(userAtom);
+  const [step, setStep] = useAtom(stepAtom);
 
-  const {
-    data,
-    isLoading,
-    mutate: getUser,
-  } = useSWR({ url: `user/info` }, HTTPService.getFetcher<UserModel>, {
-    errorRetryCount: 0,
-  });
+  const { data, isLoading } = useSWR(
+    { url: `user/info` },
+    HTTPService.getFetcher<UserModel>,
+    {
+      errorRetryCount: 0,
+    }
+  );
 
   useEffect(() => {
-    !isLoading && setStep(data ? data.step : 0);
-  }, [data, isLoading]);
+    user && setStep(user.step);
+  }, [user]);
 
+  useEffect(() => {
+    !isLoading && setUser(data);
+  }, [data, isLoading]);
   // setInterval(async () => {
   //   console.log(await SecureStore.getItemAsync("auth_token"), "token");
   // }, 2000);
@@ -75,10 +81,8 @@ export default function MainPage() {
           <></>
         ) : (
           <>
-            {step === 0 && <AuthScreen getUser={getUser} />}
-            {step === 1 && data && (
-              <ChooseWeaponScreen userName={data.name} getUser={getUser} />
-            )}
+            {step === 0 && <AuthScreen />}
+            {step === 1 && user && <ChooseWeaponScreen userName={user.name} />}
             {step === 2 && <Text>Coming soon</Text>}
           </>
         )}

@@ -12,11 +12,15 @@ import { UserModel } from "../../../types/user";
 import HTTPService from "../../../utils/HTTPService";
 import { commonStyles } from "../../../styles";
 import { BaseButton } from "../../../components/Buttons/BaseButton/BaseButton";
+import { useAtom } from "jotai";
+import { userAtom } from "../../../store";
 
-export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
+export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
+  const [_, setUser] = useAtom(userAtom);
   const isKeyboardOpen = useKeyboardCheck();
 
   const {
@@ -48,7 +52,7 @@ export const UserEnterForm: FC<UserEnterFormProps> = ({ isLogin, getUser }) => {
 
   const saveUserTokenToStorage = async (token: string) => {
     await SecureStore.setItemAsync("auth_token", token);
-    getUser();
+    setUser(isLogin ? loginData : registerData);
   };
 
   useEffect(() => {

@@ -1,12 +1,11 @@
 import { Text, View } from "react-native";
 import { FC, useState } from "react";
 import { authScreenStyles } from "./styles";
-import { WithGetUser } from "../types";
 import { commonStyles } from "../../styles";
 import { BaseButton } from "../../components/Buttons/BaseButton/BaseButton";
 import { UserEnterForm } from "./UserEnterForm";
 
-export const AuthScreen: FC<WithGetUser> = ({ getUser }) => {
+export const AuthScreen: FC = () => {
   const [isUserEnterForm, setIsUserEnterForm] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
@@ -29,6 +28,6 @@ export const AuthScreen: FC<WithGetUser> = ({ getUser }) => {
       />
     </View>
   ) : (
-    <UserEnterForm isLogin={isLogin} getUser={getUser} />
+    <UserEnterForm isLogin={isLogin} />
   );
 };

@@ -1,5 +1,4 @@
 import { CommonErrorModel } from "../../../types/user";
-import { WithGetUser } from "../../types";
 
 export interface ValidationErrorModel extends CommonErrorModel {
   email?: string;
@@ -7,6 +6,6 @@ export interface ValidationErrorModel extends CommonErrorModel {
   name?: string;
 }
 
-export interface UserEnterFormProps extends WithGetUser {
+export interface UserEnterFormProps {
   isLogin: boolean;
 }

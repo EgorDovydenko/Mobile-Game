@@ -10,16 +10,16 @@ import { createCharacterStyles } from "./styles";
 import useSWRMutation from "swr/mutation";
 import HTTPService from "../../utils/HTTPService";
 import { UserModel } from "../../types/user";
-import { WithGetUser } from "../types";
 import { WeaponsEnum } from "../../constants";
+import { useAtom } from "jotai";
+import { stepAtom } from "../../store";
 
-interface CreateCharacterScreenProps extends WithGetUser {
+interface CreateCharacterScreenProps {
   userName: string;
 }
 
 export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
   userName,
-  getUser,
 }) => {
   const scaleValueAxe = new Animated.Value(1);
   const scaleValueKnife = new Animated.Value(1);
@@ -27,6 +27,8 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
   const scaleValueMagic = new Animated.Value(1);
 
   const [weapon, setWeapon] = useState("");
+
+  const [_, setStep] = useAtom(stepAtom);
 
   const { trigger: handleSetWeapon } = useSWRMutation(
     { url: `user/weapon`, body: { weapon } },
@@ -50,7 +52,7 @@ export const ChooseWeaponScreen: FC<CreateCharacterScreenProps> = ({
   };
 
   useEffect(() => {
-    weapon && handleSetWeapon().then(() => getUser());
+    weapon && handleSetWeapon().then(() => setStep(2));
   }, [weapon]);
 
   return (
